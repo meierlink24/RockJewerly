@@ -1,0 +1,149 @@
+/* ========== 1.  Design tokens ========== */
+:root {
+  --accent: #e02b2b;
+  --text:   #222;
+  --bg:     #fff;
+  --bg-drawer: #fafafa;
+  --border: rgba(0, 0, 0, 0.05);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --transition: 0.3s ease;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* ========== 2.  Reset tiny bits ========== */
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+/* ========== 3.  Layout wrapper ========== */
+.nav-container {
+  position: relative;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  z-index: 100; /* sit on top of content */
+}
+
+.nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+/* ========== 4.  Hamburger (mobile) ========== */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 1rem 0;
+  transition: transform var(--transition);
+}
+
+.hamburger span {
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* animation to X */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ========== 5.  Drawer (mobile) ========== */
+.nav-drawer {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  max-width: 300px;
+  max-height: 0;
+  overflow: hidden;
+  background: var(--bg-drawer);
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0.5rem;
+  box-shadow: var(--shadow);
+  transition: max-height var(--transition);
+}
+
+.nav-drawer.show {
+  max-height: 400px;
+}
+
+.drawer-link {
+  margin: 0.4rem 1rem;
+  padding: 0.9rem 1rem;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 6px;
+  color: var(--text);
+  background: var(--bg);
+  transition: background var(--transition), color var(--transition);
+  text-decoration: none;
+}
+
+.drawer-link:hover {
+  background: #f0f0f0;
+}
+
+.drawer-link.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ========== 6.  Desktop navbar ≥768px ========== */
+@media (min-width: 768px) {
+  /* hide hamburger */
+  .hamburger { display: none; }
+
+  .nav-bar {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.8rem 0;
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 0.3rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: color var(--transition);
+    text-decoration: none;
+  }
+
+  /* animated underline */
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition);
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--accent);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    transform: scaleX(1);
+  }
+}
